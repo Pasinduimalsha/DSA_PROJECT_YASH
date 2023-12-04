@@ -5,7 +5,6 @@
 using namespace std;
 
 
-
 int main() {
 
     Course cs;
@@ -17,4 +16,5 @@ int main() {
     centerText(output);*/
 
     return 0;
+
 }

@@ -10,6 +10,7 @@ public:
     string university;
     string description;
     string price;
+    string duration;
     listnode* next;
     listnode* prev;
 
@@ -17,14 +18,16 @@ public:
         university = "NULL";
         description = "NULL";
         price = "NULL";
+        duration = "NULL";
         next = NULL;
         prev = NULL;
     }
 
-    listnode(string uni, string dec, string pr) {
+    listnode(string uni, string dec, string pr, string dr) {
         university = uni;
         description = dec;
         price = pr;
+        duration = dr;
     }
 };
 
@@ -42,8 +45,8 @@ public:
         size = 0;
     }
 
-    void insertLast(string uni, string dec, string pr) {
-        listnode* newnode = new listnode(uni, dec, pr);
+    void insertLast(string uni, string dec, string pr, string dr) {
+        listnode* newnode = new listnode(uni, dec, pr, dr);
 
         if (tail == NULL) {
             head = newnode;
@@ -52,23 +55,15 @@ public:
         }
         else {
 
-
-            if (size % 2 != 0) {
-                tail->next = newnode;
-                newnode->prev = tail;
-                tail = newnode;
-                tail->university = uni;
-                tail->price = pr;
-                size++;
-
-            }
-            else {
-                tail->next = newnode;
-                newnode->prev = tail;
-                tail = newnode;
-                tail->description = dec;
-                size++;
-            }
+            tail->next = newnode;
+            newnode->prev = tail;
+            tail = newnode;
+            tail->university = uni;
+            tail->price = pr;
+            tail->duration = dr;
+            tail->description = dec;
+            size++;
+         
         }
 
 
@@ -86,6 +81,8 @@ public:
                 cout << current->university << endl;
                 cout << current->description << endl;
                 cout << "Price: " << current->price << " RUPEES" << endl;
+                cout << current->duration << endl;
+
                 cout << "-----------------------------" << endl;
                 current = current->next;
             }
@@ -135,67 +132,70 @@ public:
         b->price = tempPrice;
     }
 
-    void printSortedByPrice() {
-        sortByPrice();
-        printAll();
-    }
     void printCoursesInPriceRange(string range) {
         listnode* current = head;
+        int count = 1;
+        vector<listnode*> selectedCourses;  // Vector to store selected courses
 
         cout << "Courses in the selected price range:" << endl;
 
-        while (current != NULL) {
+        while (current != nullptr) {
             // Check if the current node's price falls within the selected range
-            if ((range == "1" && stoi(current->price) >= 100000 && stoi(current->price) <= 500000) ||
-                (range == "2" && stoi(current->price) >= 500000 && stoi(current->price) <= 1000000) ||
-                (range == "3" && stoi(current->price) >= 1500000 && stoi(current->price) <= 2000000) ||
-                (range == "4" && stoi(current->price) >= 2000000 && stoi(current->price) <= 2500000)) {
-                cout << "| Course - " << endl;
+            if ((range == "1" && stoi(current->price) >= 1000000 && stoi(current->price) <= 1500000) ||
+                (range == "2" && stoi(current->price) >= 1500000 && stoi(current->price) <= 2000000) ||
+                (range == "3" && stoi(current->price) >= 2000000 && stoi(current->price) <= 2500000) ||
+                (range == "4" && stoi(current->price) >= 2500000 && stoi(current->price) <= 2500000)) {
+                cout << "| Course - " << count << endl;
                 cout << current->university << endl;
                 cout << current->description << endl;
                 cout << "Price: " << current->price << " RUPEES" << endl;
                 cout << "-----------------------------" << endl;
+
+                // Store the current node in the vector
+                selectedCourses.push_back(current);
+                count++;
             }
 
             // Move to the next node
             current = current->next;
         }
+
+        // Ask the user to select a course
+
+
+        if (!selectedCourses.empty()) {
+
+            int selectedNumber;
+            cout << "Provide the course number you'd like to choose: ";
+            cin >> selectedNumber;
+
+            // Validate the user input
+            if (selectedNumber >= 1 && selectedNumber <= selectedCourses.size()) {
+                // User selected a valid course, you can use selectedCourses[selectedNumber - 1]
+                cout << "---------------------------------"<<endl;
+                cout << "You selected the following course:" << endl;
+                cout << selectedCourses[selectedNumber - 1]->university << endl;
+                cout << selectedCourses[selectedNumber - 1]->description << endl;
+                cout << "Price: " << selectedCourses[selectedNumber - 1]->price << " RUPEES" << endl;
+            }
+            else {
+                cout << "Invalid selection." << endl;
+            }
+        }
+        else {
+            cout << "No courses in the selected price range." << endl;
+        }
+
     }
-    //void printCoursesInPriceRangeSorted(string range) {
-    //    listnode* current = head;
-
-    //    cout << "Courses in the selected price range:" << endl;
-
-    //    while (current != NULL && stoi(current->price) < stoi(range)) {
-    //        current = current->next; // Move to the first Course within or after the range
-    //    }
-
-    //    while (current != NULL && stoi(current->price) <= stoi(range) * 10) {
-    //        // Check if the current node's price falls within the selected range (considering the multiplied range)
-    //        cout << "| Course - " << endl;
-    //        cout << current->university << endl;
-    //        cout << current->description << endl;
-    //        cout << "Price: " << current->price << " RUPEES" << endl;
-    //        cout << "-----------------------------" << endl;
-
-    //        // Move to the next node
-    //        current = current->next;
-    //    }
-    //}
+   
 
     void printCoursesInPriceRange_1(string range) {
         sortByPrice();
         printCoursesInPriceRange(range);
 
-
     }
 
-    //void printSortedCoursesInPriceRange(string range) {
-    //    sortByPrice();
-    //    //printCoursesInPriceRange(range);
-    //    printCoursesInPriceRangeSorted(range);
-
-    //}
+ 
 
 
 };
