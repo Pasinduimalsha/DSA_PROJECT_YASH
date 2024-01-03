@@ -3,12 +3,14 @@ using namespace std;
 #include <string>
 #include <fstream>
 #include <vector>
+//#include "Hash.h"
 //Bellow includes are recently added
- 
+
 #include <iostream>
 #ifdef _WIN32
 #include <windows.h> // For Windows console functions
 #endif
+#include <iomanip>  // for setw
 
 // ANSI escape codes for text colors
 // Reset Color:
@@ -20,8 +22,8 @@ using namespace std;
 #define ANSI_RED "\033[31m"
 #define ANSI_GREEN "\033[32m"
 #define ANSI_YELLOW "\033[33m"
-#define ANSI_MAGENTA   "\033[34m"
-//#define ANSI_MAGENTA "\033[35m"
+#define ANSI_BLUE "\033[34m"
+#define ANSI_MAGENTA "\033[35m"
 #define ANSI_CYAN "\033[36m"
 #define ANSI_WHITE "\033[37m"
 
@@ -31,9 +33,9 @@ using namespace std;
 #define ANSI_BG_GREEN "\033[42m"
 #define ANSI_BG_YELLOW "\033[43m"
 #define ANSI_BG_BLUE "\033[44m"
-#define ANSI_MAGENTA  "\033[45m"
+#define ANSI_BG_MAGENTA "\033[45m"
 #define ANSI_BG_CYAN "\033[46m"
-#define ANSI_BG_WHITE "\033[47m"
+  //#define    "000\033[47m"
 
 
 
@@ -43,20 +45,24 @@ void setTextColor(int color) {
 #endif
 }
 
-
 void Course::Menu() {
 	// Your menu implementation
 	string Choose;
-	cout   << ANSI_RED <<"====================================" << ANSI_RESET <<endl;
-	cout   << ANSI_CYAN << "|A|->Students                       " << ANSI_RESET << endl;
-	cout   << ANSI_CYAN << "|B|->Field                          " << ANSI_RESET << endl;
-	cout   << ANSI_CYAN   << "|C|->Selected Caurse                " << ANSI_RESET << endl;
-	cout   << ANSI_CYAN  << "|E|->Add to data                    " << ANSI_RESET << endl;
-	cout   << ANSI_RED << "====================================" << ANSI_RESET << endl;
-	cout   << ANSI_CYAN   << "|    Insert A, B, C, D or E        |" << ANSI_RESET << endl;
-	cout   << ANSI_RED << "====================================" << ANSI_RESET << ANSI_RESET << endl;
-	cin >> Choose;
+	HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
+	SetConsoleTextAttribute(h, 10);
 
+	cout << ANSI_GREEN << setw(80) << "===================================="<< ANSI_RESET << endl;
+	cout << setw(60) << "\t  |A|->Students" << endl;
+	cout << setw(60) << "|B|->Field" << endl;
+	cout << setw(70) << "|C|->Selected Course" << endl;
+	//cout << setw(80) << "     |D|->Login as a Field" << endl;
+	cout << setw(60) << "\t  |E|->Add to data" << endl;
+	cout << ANSI_GREEN << setw(80) << "     ====================================" << ANSI_RESET << endl;
+	cout << setw(70) << "|    Insert A, B, C, D or E" << endl;
+	cout << ANSI_GREEN << setw(80) << "     ====================================" << ANSI_RESET << endl;
+	SetConsoleTextAttribute(h, 15);
+
+	cin >> Choose;
 
 	if (Choose == "A" || Choose == "a")
 	{
@@ -79,6 +85,10 @@ void Course::Menu() {
 		cout << "jef";
 		//selected caurses
 	}
+	else if (Choose == "D" || Choose == "d") {
+		system("cls");
+		//caurse adder
+	}
 	else if (Choose == "E" || Choose == "e") {
 		system("cls");
 
@@ -90,23 +100,25 @@ void Course::Menu() {
 	}
 	else {
 		system("cls");
-		cout   << ANSI_CYAN   <<"OOPs.....!!!! Wrong selection....Try again" << ANSI_RESET<<  endl;
+		cout    << "OOPs.....!!!! Wrong selection....Try again" << ANSI_RESET << endl;
 		Menu();
 	}
 }
 
 
+
 string Course::selectField() {
 	// Logic to select a field
 	string category;
-	cout << ANSI_RED << " =================================" << ANSI_RESET << endl;
-	cout   << ANSI_CYAN   << "     Select Your Field            " << ANSI_RESET << endl;
-	cout   << ANSI_RED <<  " =================================" << ANSI_RESET << endl;
-	cout   << ANSI_CYAN << "01. Chemical Engineering         " << ANSI_RESET << endl;
-	cout   << ANSI_CYAN << "02. Civil Engineering" << ANSI_RESET << endl;
-	cout   << ANSI_CYAN << "03. Electrical and Electronic Engineering" << ANSI_RESET << endl;
-	cout   << ANSI_CYAN << "04. Mechanical Engineering" << ANSI_RESET << endl;
-	
+	cout    << "     Select Your Field            " << ANSI_RESET << endl;
+	cout <<     ANSI_RED << " =================================" << ANSI_RESET << endl;
+	cout    << "01. Architecture & Design         " << ANSI_RESET << endl;
+	cout    << "02. Arts & Humanities             " << ANSI_RESET << endl;
+	cout    << "03. Aviation Industry             " << ANSI_RESET << endl;
+	cout    << "04. Beauty & Hair                 " << ANSI_RESET << endl;
+	cout    << "05. Business & Management         " << ANSI_RESET << endl;
+
+
 
 	cin >> category;
 	if (category == "1" || category == "2" || category == "3" || category == "4" || category == "5") {
@@ -115,7 +127,7 @@ string Course::selectField() {
 	}
 	else {
 		system("cls");
-		cout   << ANSI_MAGENTA  << "Invalied Field" <<ANSI_RESET<< endl;
+		cout    << "Invalied Field" << ANSI_RESET << endl;
 		category = selectField();
 	}
 	return(category);
@@ -125,11 +137,11 @@ string Course::selectField() {
 void Course::students() {
 	// Your student handling logic
 	string student_1;
-	cout << ANSI_RED << "=========================================" << ANSI_RESET <<  endl;
-	cout << ANSI_CYAN   << "|E| Studant is an exsisting student    " << ANSI_RESET<< endl;
-	cout << ANSI_CYAN   << "|N| Student is a new Student             " << ANSI_RESET << endl;
-	cout << ANSI_CYAN   << "|B| Go Back                              " << ANSI_RESET << endl;
-	cout << ANSI_RED << "=========================================" << ANSI_RESET << endl;
+	cout <<     ANSI_RED << "=========================================" << ANSI_RESET << endl;
+	cout    << "|NIC| Studant is an exsisting student    " << ANSI_RESET << endl;
+	cout    << "|N| Student is a new Student             " << ANSI_RESET << endl;
+	cout    << "|B| Go Back                              " << ANSI_RESET << endl;
+	cout <<     ANSI_RED << "=========================================" << ANSI_RESET << endl;
 
 	cin >> student_1;
 
@@ -182,6 +194,8 @@ void Course::students() {
 		else if (anotherNewStudent == "K") {
 			//operating for an existing customer
 
+
+
 		}
 
 	}
@@ -221,28 +235,54 @@ void Course::students() {
 				cin >> option_1;
 				if (option_1 == "y" || option_1 == "Y") {
 					string Opinion;
-					cout << "| A | Edit Customer's Name\t\t|\n| B | Edit Customer's NIC\t\t|\n| C | Edit Customer's Address\t\t|" << endl;
-					cout << "| D | Edit Customer's Phone Number\t|\n| G | Main menu \t\t\t| \n----------------------------------------" << endl;
+					cout << "| A | Existing case    |\n| B | New case     |\n| C | Edit Customer's Name  |\n| D | Edit Customer's NIC  |\n| E | Edit Customer's Address  |" << endl;
+					cout << "| F | Edit Customer's Phone Number |\n| G | Main menu    | \n----------------------------------------" << endl;
 					cin >> Opinion;
 
+					if (Opinion == "A" || Opinion == "a")
+					{
+						//cout << "Customer will have a discount\nWhat is the case number?" << endl;
+						//int CaseNumber;			//The case number that customer wish to pay
+						//cin >> CaseNumber;
+
+						////The loop runs until all cases of a particular customer finished
+						//while (CaseNumber > data[j].Cases->size) {
+						//	cout << "invalid case number\nWhat is the case number?" << endl;
+						//	cin >> CaseNumber;
+						//}
+
+						////Add an existing case for relavant repaimen
+						//AddCaseToRepairmen(data[j].NIC, data[j].Cases->getOne(CaseNumber)->repairmen,
+						//	data[j].Cases->getOne(CaseNumber)->Problem,
+						//	data[j].Cases->getOne(CaseNumber)->description);
+
+
+						//LoopFactor = 1;
+					}
+
+					else if (Opinion == "B" || Opinion == "b") //Add a new case
+					{/*
+						AddNewCase(data[j], data[j].NIC);
+						LoopFactor = 1;*/
+					}
 
 					//Editing customer's data section
-					if (Opinion == "A" || Opinion == "a") //Edit custormer's name
+					else if (Opinion == "C" || Opinion == "c") //Edit custormer's name
 					{
 						cout << "New Name =";
 						cin >> data[j].Name;
 					}
-					else if (Opinion == "B" || Opinion == "b") //Edit custormer's NIC
+					else if (Opinion == "D" || Opinion == "d") //Edit custormer's NIC
 					{
 						cout << "New NIC =";
 						cin >> data[j].NIC;
 					}
-					else if (Opinion == "C" || Opinion == "c") //Edit custormer's Address
+					else if (Opinion == "E" || Opinion == "e") //Edit custormer's Address
 					{
 						cout << "New Address =";
 						cin >> data[j].Address;
 					}
-					else if (Opinion == "D" || Opinion == "d") //Edit custormer's Phone no.
+					else if (Opinion == "F" || Opinion == "f") //Edit custormer's Phone no.
 					{
 						cout << "New Phone Number =";
 						cin >> data[j].PhoneNumber;
@@ -278,45 +318,58 @@ void Course::students() {
 string Course::priceRange() {
 	system("cls");
 	string range;
-	
-	cout << ANSI_CYAN <<"   Select a preference price range    " << ANSI_RESET <<endl;
-	cout << ANSI_RED << "=====================================" << ANSI_RESET<< endl;
-	cout << endl;
-	cout << ANSI_CYAN <<"|1|.RS. 1 000 000 - 1 500 000"    << ANSI_RESET << endl;
-	cout << ANSI_CYAN <<"|2|.RS. 1 500 000 - 2 000 000"    << ANSI_RESET<<endl;
-	cout << ANSI_CYAN <<"|3|.RS. 2 000 000 - 2 500 000"    << ANSI_RESET<< endl;
-	cout << ANSI_CYAN <<"|4|.RS. 2 500 000 - 3 000 000"    << ANSI_RESET <<endl;
-	cout << endl;
-	cout << ANSI_RED << "=====================================" << ANSI_RESET<< endl;
+	cout << "Select preference price range" << endl;
+	cout << "|1|. 100 000 -  500 000 RUPEES" << endl;
+	cout << "|2|. 500 000 - 1 000 000 RUPEES" << endl;
+	cout << "|3|. 1 500 000 - 2 000 000 RUPEES" << endl;
+	cout << "|4|. 2 000 000 - 2 500 000 RUPEES" << endl;
 
 	cin >> range;
 
 	system("cls");
 
-	
+	cout << "Courses in the selected price range:" << endl;
+
+
 	// Traverse the linked list
 	CourseList.printCoursesInPriceRange_1(range);
+
+	//string x;
+	/*cout << "If you want sortd caurse list(y/n)";
+	cin >> x;
+	if (x == "Y" || x == "y") {
+		system("cls");
+		CourseList.printSortedCoursesInPriceRange(range);
+
+	}
+	else {
+		cout << "You seleted caurses" << endl;
+	}*/
+
+
 
 	return range;
 }
 
 
+
+
+
 void Course::fileRead() {
-	
+	cout << "File Reading" << endl;
 	fstream task;
 	task.open("Tasklist.txt", ios::in);
 
 	cout << "What department details you want to store";
-	cout << endl;
-	
 
 	string category_1;
 
-	cout << "\n1.Chemical Engineering\n2.Civil Engineering\n3.Electrical and Electronic Engineering\n4.Mechanical Engineering" << endl;
+	cout << "1.COM\n2.Elec\n3.Con\n4.BS" << endl;
 
 	cin >> category_1;
 	if (category_1 == "1") {
 		system("cls");
+
 
 	}
 	else {
@@ -327,40 +380,35 @@ void Course::fileRead() {
 
 	if (true) {
 		if (task.peek() == ifstream::traits_type::eof()) {
-			
+			cout << "Link is empty" << endl;
 		}
 		else {
 			cout << "File is not empty" << endl;
 		}
 
 		int lenth = 0;
-		cout << "Enter the number of courses you want to store: ";
+		cout << "Enter the number of entries: ";
 		cin >> lenth;
 		cin.ignore();
 
 		for (int i = 0; i < lenth; ++i) {
-			string uni, dec, pr,dr;
-			cout << "University " << i + 1 << endl;
+			string uni, dec, pr;
 
-			cout << "University Name " << ": ";
+
+			cout << "Enter university " << i + 1 << ": ";
 			getline(cin, uni);
 
-			cout << "Description "  << ": ";
+			cout << "Enter description " << i + 1 << ": ";
 			getline(cin, dec);
 
-			cout << "Price "  << ": "<<"RS. ";
+			cout << "Enter price " << i + 1 << ": ";
 			getline(cin, pr);
 
-			cout << "Duration" << ": ";
-			getline(cin, dr);
-			
-
 			task << uni << " " << dec << " " << pr << endl;
-			CourseList.insertLast(uni, dec, pr ,dr);
+			CourseList.insertLast(uni, dec, pr);
 		}
 
 		task.close();
-
 	}
 }
 
@@ -389,3 +437,45 @@ void centerText(const std::string& text) {
 
 	std::cout << text << std::endl;
 } */
+
+/*
+Hash::Hash(int b)
+{
+	this->BUCKET = b;
+	table = new list<int>[BUCKET];
+}
+
+void Hash::insertItem(int key)
+{
+	int index = hashFunction(key);
+	table[index].push_back(key);
+}
+
+void Hash::deleteItem(int key)
+{
+	// get the hash index of key
+	int index = hashFunction(key);
+
+	// find the key in (index)th list
+	list <int> ::iterator i;
+	for (i = table[index].begin();
+		i != table[index].end(); i++) {
+		if (*i == key)
+			break;
+	}
+
+	// if key is found in hash table, remove it
+	if (i != table[index].end())
+		table[index].erase(i);
+}
+
+// function to display hash table
+void Hash::displayHash() {
+	for (int i = 0; i < BUCKET; i++) {
+		cout << i;
+		for (auto x : table[i])
+			cout << " --> " << x;
+		cout << endl;
+	}
+}
+*/
