@@ -42,8 +42,16 @@ used for users to register and get suggestions
 
 ## Getting Started
 
-Follow these steps to get higher education fpportunity finder app up and running on your local machine. 
-   
+Follow these steps to get higher education opportunity finder app up and running on your local machine. 
+
+01. If you have registered yet you can logged into using your id number.If you could not registered you can regiter by studens path.
+02. If you want to select a cause Enter B in main window.
+03. Then enter your preference field.
+04. Then enter preference price range.
+05. After these steps you will show some caurses in sorted.
+06. You can select a suitable caurse by entering a caurse number.
+07. Finally you can see your all seleted caurses.
+       
 ## Usage
 
 01. To assist students in finding diploma and degree programs that suit their 
