@@ -65,4 +65,4 @@ opportunities.
 constraints.
 
 ---
-We have created this app using data structures and algorihtms.
+We have created this app using data structures and algorithms.
