@@ -3,13 +3,9 @@
 ## Table of Contents
 
 - [Introduction](#introduction)
-- 
 - [Algorithm Usage](#algorithm-usage)
--
 - [Overview](#overview)
-- 
 - [Getting Started](#getting-started)
-
 - [Usage](#usage)
 
 
